@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :address do
+    market_id 1
     street "943 Main Street"
     city "Akron"
     state "Ohio"
