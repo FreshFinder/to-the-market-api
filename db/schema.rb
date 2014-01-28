@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128013145) do
+ActiveRecord::Schema.define(version: 20140128021836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: true do |t|
+    t.integer  "market_id"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "zipcode"
+    t.decimal  "lat",         precision: 10, scale: 6
+    t.decimal  "long",        precision: 10, scale: 6
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses", ["market_id"], name: "index_addresses_on_market_id", using: :btree
 
   create_table "markets", force: true do |t|
     t.integer  "fmid"
