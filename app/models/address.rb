@@ -1,3 +1,7 @@
 class Address < ActiveRecord::Base
-  validates :market_id, presence: true
+  with_options :presence => true do |address|
+    address.validates :market_id
+    address.validates :lat
+    address.validates :long
+  end
 end
