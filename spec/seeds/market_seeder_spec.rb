@@ -10,10 +10,17 @@ describe "Parsing a market" do
 end
 
 describe "Seeding a market" do
-  it "changes the count on the database when seeded" do
+  it "changes the count on the Market database when seeded" do
     out = StringIO.new
     expect(Market.count).to eq 0
     MarketSeeder.seed(2, out)
     expect(Market.count).to eq 2
+  end
+
+  it "changes the count on the Address database when seeded" do
+    out = StringIO.new
+    expect(Address.count).to eq 0
+    MarketSeeder.seed(2, out)
+    expect(Address.count).to eq 2
   end
 end

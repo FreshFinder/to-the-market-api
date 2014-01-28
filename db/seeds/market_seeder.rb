@@ -20,7 +20,16 @@ class MarketSeeder
   end
 
   def self.build_markets(line, out)
-    Market.create!(:fmid => line[:fmid], :name => line[:marketname])
+    m = Market.create!(:fmid => line[:fmid], :name => line[:marketname])
     out.puts line[:marketname]
+    a = Address.create!(:market_id => m.id,
+                 :street => line[:street],
+                 :city => line[:city],
+                 :state => line[:state],
+                 :zipcode => line[:zip],
+                 :description => line[:location],
+                 :lat => line[:x],
+                 :long => line[:y])
+    out.puts a
   end
 end
