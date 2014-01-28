@@ -4,4 +4,6 @@ class Address < ActiveRecord::Base
     address.validates :lat
     address.validates :long
   end
+
+  belongs_to :market
 end
