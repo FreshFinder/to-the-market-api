@@ -10,5 +10,6 @@ gem 'thin'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'jazz_hands'
 end
 
