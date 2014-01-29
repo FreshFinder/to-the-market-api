@@ -28,8 +28,8 @@ class MarketSeeder
                  :state => line[:state],
                  :zipcode => line[:zip],
                  :description => line[:location],
-                 :lat => line[:x],
-                 :long => line[:y])
+                 :long => line[:x],
+                 :lat => line[:y])
     out.puts a.city
 
     product_list.each do |offering|
