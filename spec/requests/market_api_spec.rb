@@ -40,16 +40,16 @@ describe "Markets API" do
     it "returns products for the given market" do
       market = FactoryGirl.create :market
       product = FactoryGirl.create :product
-      FactoryGirl.create :offering, :market_id => market.id, :product_id => product.id
+      offering = FactoryGirl.create :offering, :market_id => market.id, :product_id => product.id
 
-      get "/api/v1/markets/2/products", {}, {"Accept" => "application/json"}
+      get "/api/v1/markets/#{market.id}/products", {}, {"Accept" => "application/json"}
 
       expect(response.status).to eq 200
 
       body = JSON.parse(response.body)
 
-      market_products = body.map { |product| product }
-      expect(market_products).to match_array(["stuff"])
+      market_products = body.map { |product| product["name"]}
+      expect(market_products).to match_array(["honey"])
     end
   end
 
