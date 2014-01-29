@@ -36,4 +36,21 @@ describe "Markets API" do
     end
   end
 
+  describe "GET /api/v1/markets/:market_id/products" do
+    it "returns products for the given market" do
+      market = FactoryGirl.create :market
+      product = FactoryGirl.create :product
+      FactoryGirl.create :offering, :market_id => market.id, :product_id => product.id
+
+      get "/api/v1/markets/2/products", {}, {"Accept" => "application/json"}
+
+      expect(response.status).to eq 200
+
+      body = JSON.parse(response.body)
+
+      market_products = body.map { |product| product }
+      expect(market_products).to match_array(["stuff"])
+    end
+  end
+
 end
