@@ -2,7 +2,7 @@ require 'csv'
 
 class MarketSeeder
 
-  def self.seed(number = {}, out = STDOUT)
+  def self.seed(number = nil, out = STDOUT)
     data = MarketSeeder.parse_file('./db/seeds/source/2013_farmers_markets.csv')
     if number
       data.to_a[0...number].collect {|line| build_markets(line, out)}
@@ -30,6 +30,23 @@ class MarketSeeder
                  :description => line[:location],
                  :lat => line[:x],
                  :long => line[:y])
-    out.puts a
+    out.puts a.city
+
+    product_list.each do |offering|
+      if line[offering] == "Y"
+        #m.offerings << Offering.new(:product_id => offerings_id_map[offering])
+        m.products << Product.find_by(:name => offering.to_s.capitalize)
+      end
+    end
+
+    if line[:bakedgoods] == "Y"
+      m.products << Product.find_by(:name => "Baked Goods")
+    end
+
   end
-end
+
+  def self.product_list
+    [:cheese, :crafts, :flowers, :eggs, :seafood, :herbs, :vegetables, :honey, :jams, :maple, :meat, :nursery, :nuts, :poultry, :prepared, :soap, :trees, :wine]
+  end
+
+ end
