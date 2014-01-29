@@ -48,7 +48,7 @@ describe "Markets API" do
 
       body = JSON.parse(response.body)
 
-      market_products = body.map { |product| product["name"]}
+      market_products = body.map { |product| product}
       expect(market_products).to match_array(["honey"])
     end
   end
