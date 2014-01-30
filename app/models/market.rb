@@ -5,7 +5,7 @@ class Market < ActiveRecord::Base
   has_many :offerings
 
   def self.with_addresses
-    Market.includes(:address).all
+    Market.includes(:address)
   end
 
 end
