@@ -4,6 +4,7 @@ ToTheMarket::Application.routes.draw do
     namespace :v1 do
       resources :markets, :only => [:index] do
         resources :products, :only => [:index]
+        resources :payment_types, :only => [:index]
       end
     end
   end

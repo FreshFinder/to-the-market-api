@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'stringio'
 require './db/seeds/market_seeder'
 require './db/seeds/product_seeder'
+require './db/seeds/payment_type_seeder'
 
 describe "Parsing a market" do
   it "parses a CSV into lines" do
@@ -14,6 +15,7 @@ describe "Seeding a market" do
   before :each do
     @out = StringIO.new
     ProductSeeder.seed
+    PaymentTypeSeeder.seed
   end
 
   it "changes the count on the Market database when seeded" do
