@@ -36,6 +36,7 @@ production:
   adapter: postgresql
   encoding: unicode
   database: to_the_market_production
+  host: localhost
   pool: 5
-  username: to_the_market
-  password:
+  username: market_api
+  password: market_api
