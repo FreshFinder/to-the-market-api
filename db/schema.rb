@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140129165538) do
+ActiveRecord::Schema.define(version: 20140130181143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accepted_payments", force: true do |t|
+    t.integer  "market_id"
+    t.integer  "payment_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "addresses", force: true do |t|
     t.integer  "market_id"
@@ -41,6 +48,12 @@ ActiveRecord::Schema.define(version: 20140129165538) do
   create_table "offerings", force: true do |t|
     t.integer "market_id"
     t.integer "product_id"
+  end
+
+  create_table "payment_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "products", force: true do |t|

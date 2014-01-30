@@ -34,7 +34,6 @@ class MarketSeeder
 
     product_list.each do |offering|
       if line[offering] == "Y"
-        #m.offerings << Offering.new(:product_id => offerings_id_map[offering])
         m.products << Product.find_by(:name => offering.to_s.capitalize)
       end
     end
@@ -43,10 +42,20 @@ class MarketSeeder
       m.products << Product.find_by(:name => "Baked Goods")
     end
 
+    payment_type_list.each do |accepted_payment|
+      if line[accepted_payment] == "Y"
+        m.payment_types << PaymentType.find_by(:name => accepted_payment.to_s)
+      end
+    end
+
   end
 
   def self.product_list
     [:cheese, :crafts, :flowers, :eggs, :seafood, :herbs, :vegetables, :honey, :jams, :maple, :meat, :nursery, :nuts, :poultry, :prepared, :soap, :trees, :wine]
+  end
+
+  def self.payment_type_list
+    [:credit, :wic, :wiccash, :sfmnp, :snap]
   end
 
  end

@@ -53,4 +53,22 @@ describe "Markets API" do
     end
   end
 
+  describe "GET /api/v1/markets/:market_id/payment_types" do
+    it "returns accepted payment types for the given market" do
+      market = FactoryGirl.create :market
+      payment_type = FactoryGirl.create :payment_type
+      accepted_payment = FactoryGirl.create :accepted_payment,
+                                            :market_id => market.id, :payment_type => payment_type
+
+      get "/api/v1/markets/#{market.id}/payment_types", {}, {"Accept" => "application/json"}
+
+      expect(response.status).to eq 200
+
+      body = JSON.parse(response.body)
+
+      market_payment_types = body.map { |payment_type| payment_type }
+      expect(market_payment_types).to match_array(["credit"])
+    end
+  end
+
 end
