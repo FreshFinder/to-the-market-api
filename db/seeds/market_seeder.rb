@@ -13,6 +13,7 @@ class MarketSeeder
 
   def self.parse_file(filename)
     open_file(filename)
+    
   end
 
   def self.open_file(filename)
@@ -20,10 +21,10 @@ class MarketSeeder
   end
 
   def self.build_markets(line, out)
-    m = Market.create!(:fmid => line[:fmid], :name => line[:marketname])
+    m = Market.create!(:fmid => line[:fmid], :name => clean_market(line[:marketname]))
     out.puts line[:marketname]
     a = Address.create!(:market_id => m.id,
-                 :street => line[:street],
+                 :street => clean_street(line[:street]),
                  :city => line[:city],
                  :state => line[:state],
                  :zipcode => line[:zip],
@@ -48,5 +49,31 @@ class MarketSeeder
   def self.product_list
     [:cheese, :crafts, :flowers, :eggs, :seafood, :herbs, :vegetables, :honey, :jams, :maple, :meat, :nursery, :nuts, :poultry, :prepared, :soap, :trees, :wine]
   end
+
+  def self.clean_market(line)
+    line.gsub(/^[0-9a-zA-Z]*$/, "")
+  end
+
+  def self.clean_street(line)
+    line.gsub(/^[0-9a-zA-Z]*$/, "")
+  end
+
+  def self.clean_state(line)
+    line.gsub(/^[a-zA-Z]*$/, "")
+  end
+
+  def self.clean_city(line)
+    line.gsub(/^[a-zA-Z]*$/, "")
+  end
+
+   def self.clean_zip(line)
+    line.to_s.rjust(5,'0')[0..4]
+  end
+    
+  
+  #   line[:zip]
+  #   line[:location].match(/^[0-9a-zA-Z]*$/)
+  #   line[:name].match(/^[0-9a-zA-Z]*$/)
+  # end
 
  end
