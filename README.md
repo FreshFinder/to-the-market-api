@@ -1,5 +1,7 @@
 ### To The Market API
 
+[![Code Climate](https://codeclimate.com/repos/52f04ef7e30ba04e35002325/badges/ee15f3819ccc2b7890ba/gpa.png)](https://codeclimate.com/repos/52f04ef7e30ba04e35002325/feed)
+
 USDA Farmer's Market Data, parsed from a CSV and put into a beautiful RESTful API!
 
 #### Usage
