@@ -20,12 +20,12 @@ describe "Seeding a market" do
 
   it "changes the count on the Market database when seeded" do
     expect(Market.count).to eq 0
-    expect { MarketSeeder.seed(2, @out) }.to change{Market.count}.by 2
+    expect { MarketSeeder.seed(2, @out) }.to change { Market.count }.by 2
   end
 
   it "changes the count on the Address database when seeded" do
     expect(Address.count).to eq 0
-    expect { MarketSeeder.seed(2, @out)}.to change{Address.count}.by 2
+    expect { MarketSeeder.seed(2, @out) }.to change { Address.count }.by 2
   end
 
   it "associates Products with their corresponding Markets when seeded" do
@@ -35,3 +35,23 @@ describe "Seeding a market" do
   end
 end
 
+describe 'validations' do
+  context 'market name' do
+    it 'is valid with numbers and letters' do
+      name = MarketSeeder.clean_market("\"Y Not Farmers Market\"")
+      name2 = MarketSeeder.clean_market("100 Mile Market")
+      result = Market.create(:fmid => 32, :name => name)
+      result2 =  Market.create(:fmid => 35, :name => name2)
+      expect(result.name).to eq "Y Not Farmers Market"
+      expect(result2.name).to eq "100 Mile Market"
+    end
+  end
+
+  context 'market street' do
+    it 'is valid with numbers and letters' do
+      street_name = MarketSeeder.clean_street("115 Market St,")
+      result = Address.create(street: street_name)
+      expect(result.street).to eq "115 Market St"
+    end
+  end
+end

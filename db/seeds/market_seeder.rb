@@ -20,10 +20,10 @@ class MarketSeeder
   end
 
   def self.build_markets(line, out)
-    m = Market.create!(:fmid => line[:fmid], :name => line[:marketname])
+    m = Market.create!(:fmid => line[:fmid], :name => clean_market(line[:marketname]))
     out.puts line[:marketname]
     a = Address.create!(:market_id => m.id,
-                 :street => line[:street],
+                 :street => clean_street(line[:street]),
                  :city => line[:city],
                  :state => line[:state],
                  :zipcode => line[:zip],
@@ -58,4 +58,12 @@ class MarketSeeder
     [:credit, :wic, :wiccash, :sfmnp, :snap]
   end
 
- end
+  def self.clean_market(line)
+    line.gsub(/"/, "") unless line.nil?
+  end
+
+  def self.clean_street(line)
+    line.gsub(/,/, "") unless line.nil?
+  end
+
+end
