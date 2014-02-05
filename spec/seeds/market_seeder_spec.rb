@@ -36,15 +36,20 @@ end
 describe 'validations' do
   context 'market name' do
     it 'is valid with numbers and letters' do
-      name = "115 Market>%${%&* St"
-      result = Market.create(name: "115 Market St")
-      expect(result.name).to eq "115 Market St"
+      name = MarketSeeder.clean_market("\"Y Not Farmers Market\"")
+      name2 = MarketSeeder.clean_market("100 Mile Market")
+      result = Market.create(:fmid => 32, :name => name)
+      result2 =  Market.create(:fmid => 35, :name => name2)
+      expect(result.name).to eq "Y Not Farmers Market"
+      expect(result2.name).to eq "100 Mile Market"
     end
+  end
 
   context 'market street' do
     it 'is valid with numbers and letters' do
-      name = "115 Market>%${%&* St"
-      result = Market.create(street: "115 Market St")
+      street_name = MarketSeeder.clean_street("115 Market St,")
+      result = Address.create(street: street_name)
       expect(result.street).to eq "115 Market St"
     end
   end
+end

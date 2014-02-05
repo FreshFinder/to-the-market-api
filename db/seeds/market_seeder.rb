@@ -51,29 +51,10 @@ class MarketSeeder
   end
 
   def self.clean_market(line)
-    line.gsub(/^[0-9a-zA-Z]*$/, "")
+    line.gsub(/"/, "") unless line.nil?
   end
 
   def self.clean_street(line)
-    line.gsub(/^[0-9a-zA-Z]*$/, "")
+    line.gsub(/,/, "") unless line.nil?
   end
-
-  def self.clean_state(line)
-    line.gsub(/^[a-zA-Z]*$/, "")
-  end
-
-  def self.clean_city(line)
-    line.gsub(/^[a-zA-Z]*$/, "")
-  end
-
-   def self.clean_zip(line)
-    line.to_s.rjust(5,'0')[0..4]
-  end
-    
-  
-  #   line[:zip]
-  #   line[:location].match(/^[0-9a-zA-Z]*$/)
-  #   line[:name].match(/^[0-9a-zA-Z]*$/)
-  # end
-
  end
