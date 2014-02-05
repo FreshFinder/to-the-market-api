@@ -103,9 +103,8 @@ describe "Markets API" do
   describe "GET /api/v1/markets/:market_id/schedules" do
     it "returns schedule information for the given market" do
       market = FactoryGirl.create :market
-      season = FactoryGirl.create :season
-      schedule = FactoryGirl.create :schedule
-      market_schedule = FactoryGirl.create :market_schedule, :market_id => market.id, :season_id => season.id, :schedule_id => schedule.id
+      season = FactoryGirl.create :season, :market_id => market.id
+      schedule = FactoryGirl.create :schedule, :season_id => season.id
 
       get "/api/v1/markets/#{market.id}/schedules", {}, {"Accept" => "application/json"}
 

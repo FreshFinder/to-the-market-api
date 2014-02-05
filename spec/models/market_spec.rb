@@ -6,8 +6,7 @@ describe Market do
     address = FactoryGirl.create(:address, :market_id => @market.id)
     product = FactoryGirl.create :product
     season = FactoryGirl.create :season
-    schedule = FactoryGirl.create :schedule
-    market_schedule = FactoryGirl.create :market_schedule, :market_id => @market.id, :season_id => season.id, :schedule_id => schedule.id
+    schedule = FactoryGirl.create :schedule, :season_id => season.id
     FactoryGirl.create :offering, :market_id => @market.id, :product_id => product.id
   end
 
@@ -32,11 +31,11 @@ describe Market do
 
   describe "market schedules association" do
     it "should have a schedule for a given market" do
-      expect(@market.schedules.first.start_time).to eq("13:00:00")
-      expect(@market.schedules.first.end_time).to eq("18:00:00")
+      expect(@market.seasons.first.schedules.first.start_time).to eq("13:00:00")
+      expect(@market.seasons.first.schedules.first.end_time).to eq("18:00:00")
     end
 
-    it "should have a seaason for a given market" do
+    it "should have a season for a given market" do
       expect(@market.seasons.first.start_month).to eq("January")
       expect(@market.seasons.first.end_month).to eq("July")
     end

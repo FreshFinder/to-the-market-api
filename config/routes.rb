@@ -5,6 +5,7 @@ ToTheMarket::Application.routes.draw do
       resources :markets, :only => [:index, :show] do
         resources :products, :only => [:index]
         resources :payment_types, :only => [:index]
+        resources :schedules, :only => [:index]
       end
     end
   end
