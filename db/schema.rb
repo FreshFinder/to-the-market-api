@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 20140205211106) do
 
   create_table "schedules", force: true do |t|
     t.integer  "day"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.string   "start_time"
+    t.string   "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

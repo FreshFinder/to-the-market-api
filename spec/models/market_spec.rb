@@ -32,8 +32,13 @@ describe Market do
 
   describe "market schedules association" do
     it "should have a schedule for a given market" do
-      expect(@market.schedule.start_time).to eq("13:00:00")
-      expect(@market.schedule.end_time).to eq("18:00:00")
+      expect(@market.schedules.first.start_time).to eq("13:00:00")
+      expect(@market.schedules.first.end_time).to eq("18:00:00")
+    end
+
+    it "should have a seaason for a given market" do
+      expect(@market.seasons.first.start_month).to eq("January")
+      expect(@market.seasons.first.end_month).to eq("July")
     end
   end
 end
