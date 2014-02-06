@@ -10,7 +10,7 @@ class Api::V1::MarketsController < ApplicationController
   end
 
   def show
-    market = Market.where(id: params[:id]).includes(:address, :payment_types, :products).as_json(:include => [:address, :payment_types, :products])
-    render json: market
+    @market = Market.where(id: params[:id]).includes(:address, :payment_types, :products).first
+
   end
 end

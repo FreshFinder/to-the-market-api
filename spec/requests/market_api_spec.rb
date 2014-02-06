@@ -36,34 +36,6 @@ describe "Markets API" do
     end
   end
 
-  describe 'GET /api/v1/markets/:market_id' do
-    it 'returns all data associated with individual market' do
-      market = FactoryGirl.create :market
-      FactoryGirl.create :address, :market_id => market.id
-      product = FactoryGirl.create :product
-      offering = FactoryGirl.create :offering, :market_id => market.id, :product_id => product.id
-      payment_type = FactoryGirl.create :payment_type
-      accepted_payment = FactoryGirl.create :accepted_payment,
-                                            :market_id => market.id, :payment_type => payment_type
-      get "/api/v1/markets/#{market.id}", {}, {"Accept" => "application/json"}
-
-      expect(response.status).to eq 200
-
-      body = JSON.parse(response.body)
-
-      parsed_name = body[0]['name']
-      parsed_address = body[0]['address']['street']
-      parsed_payment_types = body[0]['payment_types'][0]['name']
-      parsed_products = body[0]['products'][0]['name']
-
-      expected_info = [{id: market.id, name: market.name, address: market.address, offering: market.offerings, accepted_payment: market.accepted_payments }]
-
-      expect(market.name).to eq(parsed_name)
-      expect(market.address.street).to eq(parsed_address)
-      expect(market.payment_types.first.name).to eq(parsed_payment_types)
-      expect(market.products.first.name).to eq(parsed_products)
-    end
-  end
 
   describe "GET /api/v1/markets/:market_id/products" do
     it "returns products for the given market" do
