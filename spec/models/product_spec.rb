@@ -9,7 +9,7 @@ describe Product do
 
   describe "with invalid params" do
     it "is missing name" do
-      FactoryGirl.build(:product, :name => nil).should be_valid
+      FactoryGirl.build(:product, :name => nil).should_not be_valid
     end
   end
 end

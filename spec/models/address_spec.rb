@@ -11,13 +11,5 @@ describe Address do
     it "is missing market id" do
       FactoryGirl.build(:address, :market_id => nil).should_not be_valid
     end
-
-    it "is missing latitude" do
-      FactoryGirl.build(:address, :lat => nil).should be_valid
-    end
-
-    it "is missing longitude" do
-      FactoryGirl.build(:address, :long => nil).should be_valid
-    end
   end
 end

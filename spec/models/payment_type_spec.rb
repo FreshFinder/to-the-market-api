@@ -9,7 +9,7 @@ describe PaymentType do
 
   describe "with invalid parameters" do
     it "is missing name" do
-      FactoryGirl.build(:payment_type, :name => nil).should be_valid
+      FactoryGirl.build(:payment_type, :name => nil).should_not be_valid
     end
   end
 end
