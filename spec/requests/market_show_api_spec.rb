@@ -22,18 +22,18 @@ describe "Markets Show API" do
 
       body = JSON.parse(response.body)
 
-      parsed_market = body['market'][0]
+      parsed_market = body['market']
       parsed_name = parsed_market['name']
       parsed_address = parsed_market['address']['street']
-      parsed_payment_types = parsed_market['payment_types'][0]['name']
-      parsed_products = parsed_market['products'][0]['name']
+      parsed_payment_types = parsed_market['payment_types'][0]
+      parsed_products = parsed_market['products'][0]
 
       expected_info = [{id: market.id, name: market.name, address: market.address, offering: market.offerings, accepted_payment: market.accepted_payments }]
 
-      expect(market.name).to eq(parsed_name)
-      expect(market.address.street).to eq(parsed_address)
-      expect(market.payment_types.first.name).to eq(parsed_payment_types)
-      expect(market.products.first.name).to eq(parsed_products)
+      expect(parsed_name).to eq(market.name)
+      expect(parsed_address).to eq(market.address.street)
+      expect(parsed_payment_types).to eq(market.payment_types.first.name)
+      expect(parsed_products).to eq(market.products.first.name)
     end
   end
 end

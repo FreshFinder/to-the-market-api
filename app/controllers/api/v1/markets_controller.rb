@@ -11,6 +11,5 @@ class Api::V1::MarketsController < ApplicationController
 
   def show
     @market = Market.where(id: params[:id]).includes(:address, :payment_types, :products).first
-
   end
 end

@@ -11,4 +11,4 @@ class Market < ActiveRecord::Base
     Market.includes(:address)
   end
 
-end
+  end
