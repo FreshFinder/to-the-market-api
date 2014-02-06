@@ -19,6 +19,5 @@ describe Address do
     it "is missing longitude" do
       FactoryGirl.build(:address, :long => nil).should be_valid
     end
-
   end
 end
