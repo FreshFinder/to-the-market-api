@@ -25,6 +25,15 @@ describe Market do
     end
   end
 
+  describe "with_open_times" do
+    it "should return open times for the given market" do
+      market_hours = Market.with_open_times
+      expect(market_hours.seasons.first.schedules.first.start_time).to eq("13:00:00")
+      expect(market_hours.seasons.first.schedules.first.end_time).to eq("18:00:00")
+    end
+
+  end
+
   describe "offering association" do
     it "should have offerings for the given market" do
       expect(@market.products.first.name).to eq("honey")
