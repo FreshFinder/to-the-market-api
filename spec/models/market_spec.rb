@@ -5,9 +5,11 @@ describe Market do
     @market = FactoryGirl.create(:market)
     address = FactoryGirl.create(:address, :market_id => @market.id)
     product = FactoryGirl.create :product
+    payment_type = FactoryGirl.create :payment_type
     season = FactoryGirl.create :season, :market_id => @market.id
     schedule = FactoryGirl.create :schedule, :season_id => season.id
     FactoryGirl.create :offering, :market_id => @market.id, :product_id => product.id
+    FactoryGirl.create :accepted_payment, :market_id => @market.id, :payment_type_id => payment_type.id
   end
 
   describe "address association" do
@@ -26,6 +28,12 @@ describe Market do
   describe "offering association" do
     it "should have offerings for the given market" do
       expect(@market.products.first.name).to eq("honey")
+    end
+  end
+
+  describe "accepted payment association" do
+    it "should have accepted payment types for the given market" do
+      expect(@market.payment_types.first.name).to eq("credit")
     end
   end
 
