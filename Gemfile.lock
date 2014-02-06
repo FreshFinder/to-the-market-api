@@ -70,6 +70,9 @@ GEM
       pry-remote (>= 0.1.7)
       pry-stack_explorer (~> 0.4.9)
       railties (>= 3.0, < 5.0)
+    jbuilder (1.5.3)
+      activesupport (>= 3.0.0)
+      multi_json (>= 1.2.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -164,6 +167,7 @@ PLATFORMS
 DEPENDENCIES
   factory_girl_rails
   jazz_hands
+  jbuilder
   pg
   rails (= 4.0.1)
   rails-api

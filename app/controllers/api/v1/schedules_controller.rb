@@ -1,11 +1,10 @@
 class Api::V1::SchedulesController < ApplicationController
+  include ActionController::MimeResponds
+  include ActionController::ImplicitRender
+
 
   def index
-    #schedules = market.seasons.first.schedules
-    #seasons = market.seasons
-    open_times = Market.where(id: params[:market_id]).includes(seasons: [:schedules]).as_json(include: :seasons)
-    render json: open_times
-
+    @open_times = Market.where(id: params[:market_id]).includes(seasons: [:schedules]).first
   end
 
 end
