@@ -111,12 +111,12 @@ describe "Markets API" do
       expect(response.status).to eq 200
 
       body = JSON.parse(response.body)
-      seasons = body[0]["seasons"]
+      seasons = body["seasons"]
 
-      expect(seasons.first["season_number"]).to eq(season.season_number)
+      expect(seasons[0]["season_number"]).to eq(season.season_number)
 
-      schedules = seasons[0]["schedules"]
-      expect(schedules.first["start_time"]).to eq(schedule.start_time)
+      schedules = seasons[0]["schedules"][0]
+      expect(schedules["start_time"]).to eq(schedule.start_time)
 
     end
   end
