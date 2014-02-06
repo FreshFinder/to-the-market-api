@@ -1,11 +1,11 @@
 class Api::V1::SchedulesController < ApplicationController
 
   def index
-    market = Market.find(params[:market_id])
-    schedules = market.schedules
-    seasons = market.seasons
-    market_schedule = market.market_schedules
-    render json: market_schedule.map(&:season_id)
+    #schedules = market.seasons.first.schedules
+    #seasons = market.seasons
+    open_times = Market.where(id: params[:market_id]).includes(seasons: [:schedules]).as_json(include: :seasons)
+    render json: open_times
+
   end
 
 end

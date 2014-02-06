@@ -111,9 +111,13 @@ describe "Markets API" do
       expect(response.status).to eq 200
 
       body = JSON.parse(response.body)
+      seasons = body[0]["seasons"]
 
-      expected_schedule = body.map { |schedule| schedule }
-      expect(expected_schedule).to match_array([])
+      expect(seasons.first["season_number"]).to eq(season.season_number)
+
+      schedules = seasons[0]["schedules"]
+      expect(schedules.first["start_time"]).to eq(schedule.start_time)
+
     end
   end
 

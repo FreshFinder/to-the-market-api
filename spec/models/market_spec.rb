@@ -5,7 +5,7 @@ describe Market do
     @market = FactoryGirl.create(:market)
     address = FactoryGirl.create(:address, :market_id => @market.id)
     product = FactoryGirl.create :product
-    season = FactoryGirl.create :season
+    season = FactoryGirl.create :season, :market_id => @market.id
     schedule = FactoryGirl.create :schedule, :season_id => season.id
     FactoryGirl.create :offering, :market_id => @market.id, :product_id => product.id
   end

@@ -1,4 +1,3 @@
 class Schedule < ActiveRecord::Base
-  has_many :seasons
-  has_many :markets, through: :seasons
+  belongs_to :season
 end
