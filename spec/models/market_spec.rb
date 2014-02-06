@@ -5,10 +5,11 @@ describe Market do
     @market = FactoryGirl.create(:market)
     address = FactoryGirl.create(:address, :market_id => @market.id)
     product = FactoryGirl.create :product
-    season = FactoryGirl.create :season
-    schedule = FactoryGirl.create :schedule
-    market_schedule = FactoryGirl.create :market_schedule, :market_id => @market.id, :season_id => season.id, :schedule_id => schedule.id
+    payment_type = FactoryGirl.create :payment_type
+    season = FactoryGirl.create :season, :market_id => @market.id
+    schedule = FactoryGirl.create :schedule, :season_id => season.id
     FactoryGirl.create :offering, :market_id => @market.id, :product_id => product.id
+    FactoryGirl.create :accepted_payment, :market_id => @market.id, :payment_type_id => payment_type.id
   end
 
   describe "address association" do
@@ -30,10 +31,21 @@ describe Market do
     end
   end
 
+  describe "accepted payment association" do
+    it "should have accepted payment types for the given market" do
+      expect(@market.payment_types.first.name).to eq("credit")
+    end
+  end
+
   describe "market schedules association" do
     it "should have a schedule for a given market" do
-      expect(@market.schedule.start_time).to eq("13:00:00")
-      expect(@market.schedule.end_time).to eq("18:00:00")
+      expect(@market.seasons.first.schedules.first.start_time).to eq("13:00:00")
+      expect(@market.seasons.first.schedules.first.end_time).to eq("18:00:00")
+    end
+
+    it "should have a season for a given market" do
+      expect(@market.seasons.first.start_month).to eq("January")
+      expect(@market.seasons.first.end_month).to eq("July")
     end
   end
 end

@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :schedule do
+    association :season
     day 1
     start_time "13:00:00"
     end_time "18:00:00"

@@ -103,18 +103,21 @@ describe "Markets API" do
   describe "GET /api/v1/markets/:market_id/schedules" do
     it "returns schedule information for the given market" do
       market = FactoryGirl.create :market
-      season = FactoryGirl.create :season
-      schedule = FactoryGirl.create :schedule
-      market_schedule = FactoryGirl.create :market_schedule, :market_id => market.id, :season_id => season.id, :schedule_id => schedule.id
+      season = FactoryGirl.create :season, :market_id => market.id
+      schedule = FactoryGirl.create :schedule, :season_id => season.id
 
       get "/api/v1/markets/#{market.id}/schedules", {}, {"Accept" => "application/json"}
 
       expect(response.status).to eq 200
 
       body = JSON.parse(response.body)
+      seasons = body["seasons"]
 
-      expected_schedule = body.map { |schedule| schedule }
-      expect(expected_schedule).to match_array([])
+      expect(seasons[0]["season_number"]).to eq(season.season_number)
+
+      schedules = seasons[0]["schedules"][0]
+      expect(schedules["start_time"]).to eq(schedule.start_time)
+
     end
   end
 

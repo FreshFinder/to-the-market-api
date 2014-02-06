@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :season do
+    association :market
     season_number 1
     start_month "January"
     end_month "July"
