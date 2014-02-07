@@ -11,4 +11,8 @@ class Market < ActiveRecord::Base
     Market.includes(:address)
   end
 
+  def self.with_open_times
+    Market.includes(seasons: [:schedules]).first
   end
+
+end
