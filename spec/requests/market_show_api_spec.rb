@@ -28,8 +28,6 @@ describe "Markets Show API" do
       parsed_payment_types = parsed_market['payment_types'][0]
       parsed_products = parsed_market['products'][0]
 
-      expected_info = [{id: market.id, name: market.name, address: market.address, offering: market.offerings, accepted_payment: market.accepted_payments }]
-
       expect(parsed_name).to eq(market.name)
       expect(parsed_address).to eq(market.address.street)
       expect(parsed_payment_types).to eq(market.payment_types.first.name)
