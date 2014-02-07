@@ -33,25 +33,39 @@ describe "Seeding a market" do
     m = Market.find_by(name: "10:10 Farmers Market")
     expect(m.products.count).to eq 10
   end
-end
 
-describe 'validations' do
-  context 'market name' do
-    it 'is valid with numbers and letters' do
-      name = MarketSeeder.clean_market("\"Y Not Farmers Market\"")
-      name2 = MarketSeeder.clean_market("100 Mile Market")
-      result = Market.create(:fmid => 32, :name => name)
-      result2 =  Market.create(:fmid => 35, :name => name2)
-      expect(result.name).to eq "Y Not Farmers Market"
-      expect(result2.name).to eq "100 Mile Market"
+  describe 'validations' do
+    context 'market name' do
+      it 'is valid with numbers and letters' do
+        name = MarketSeeder.clean_market("\"Y Not Farmers Market\"")
+        name2 = MarketSeeder.clean_market("100 Mile Market")
+        result = Market.create(:fmid => 32, :name => name)
+        result2 =  Market.create(:fmid => 35, :name => name2)
+        expect(result.name).to eq "Y Not Farmers Market"
+        expect(result2.name).to eq "100 Mile Market"
+      end
+    end
+
+    context 'market street' do
+      it 'is valid with numbers and letters' do
+        street_name = MarketSeeder.clean_street("115 Market St,")
+        result = Address.create(street: street_name)
+        expect(result.street).to eq "115 Market St"
+      end
     end
   end
 
-  context 'market street' do
-    it 'is valid with numbers and letters' do
-      street_name = MarketSeeder.clean_street("115 Market St,")
-      result = Address.create(street: street_name)
-      expect(result.street).to eq "115 Market St"
+  describe 'seeding a market with schedules' do
+    it 'parses the season' do
+      months_gregorian = MarketSeeder.convert_season_months("11/02/03 to 01/02/04")
+      months_as_words = MarketSeeder.convert_season_months("November to February")
+      expect(months_gregorian).to eq(["November", "January"])
+      expect(months_as_words).to eq(["November", "February"])
+    end
+
+    it "changes the count in the database upon seeding" do
+      out = StringIO.new
+      expect { MarketSeeder.seed(2, out) }.to change { Season.count }.by 2
     end
   end
 end
