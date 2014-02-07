@@ -2,6 +2,9 @@ class ApplicationController < ActionController::API
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
+  include ActionController::MimeResponds
+  include ActionController::ImplicitRender
+
   # For all responses in this controller, return the CORS access control headers.
   def cors_set_access_control_headers
     headers['Access-Control-Allow-Origin'] = '*'
