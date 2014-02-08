@@ -3,6 +3,7 @@ require 'stringio'
 require './db/seeds/market_seeder'
 require './db/seeds/product_seeder'
 require './db/seeds/payment_type_seeder'
+require './db/seeds/address_seeder'
 
 describe "Parsing a market" do
   it "parses a CSV into lines" do
@@ -48,7 +49,7 @@ describe "Seeding a market" do
 
     context 'market street' do
       it 'is valid with numbers and letters' do
-        street_name = MarketSeeder.clean_street("115 Market St,")
+        street_name = AddressSeeder.clean_street("115 Market St,")
         result = Address.create(street: street_name)
         expect(result.street).to eq "115 Market St"
       end

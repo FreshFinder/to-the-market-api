@@ -1,4 +1,5 @@
 require 'csv'
+require_relative './address_seeder'
 
 class MarketSeeder
 
@@ -22,19 +23,12 @@ class MarketSeeder
   def self.build_markets(line, out)
     m = Market.create!(:fmid => line[:fmid], :name => clean_market(line[:marketname]))
     out.puts line[:marketname]
-    a = Address.create!(:market_id => m.id,
-                 :street => clean_street(line[:street]),
-                 :city => line[:city],
-                 :state => line[:state],
-                 :zipcode => line[:zip],
-                 :description => line[:location],
-                 :long => line[:x],
-                 :lat => line[:y])
-    out.puts a.city
+    AddressSeeder.build_address(m.id, line[:street], line[:city],
+                                line[:state], line[:zip],
+                                line[:location], line[:x], line[:y], out)
 
     product_list.each do |offering|
       if line[offering] == "Y"
-        binding.pry
         m.products << Product.find_by(:name => offering.to_s.capitalize)
       end
     end
@@ -69,10 +63,6 @@ class MarketSeeder
 
   def self.clean_market(line)
     line.gsub(/"/, "") unless line.nil?
-  end
-
-  def self.clean_street(line)
-    line.gsub(/,/, "") unless line.nil?
   end
 
   def self.convert_season_months(season_date)
