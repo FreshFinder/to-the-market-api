@@ -55,6 +55,10 @@ class ScheduleSeeder
   end
 
   def self.military_time_converter(input)
-    Time.parse(input).hour.to_s + ":00:00"
+    begin
+      Time.parse(input).hour.to_s + ":00:00"
+    rescue ArgumentError
+      nil
+    end
   end
 end
