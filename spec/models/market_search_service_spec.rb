@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe MarketSearchService do
-  # :TODO: mock out the response
   before :each do
     denver_market = FactoryGirl.create :market, :name => "Denver Hipster Hoodlum"
     florida_market = FactoryGirl.create :market, :name => "Boca Bacon Bathers"
@@ -19,8 +18,10 @@ describe MarketSearchService do
 
   describe "by zipcode" do
     it "returns markets by zipcode" do
-      markets = MarketSearchService.by_zipcode(80218)
-      expect(markets.map(&:name)).to match_array(["Denver Hipster Hoodlum"])
+      VCR.use_cassette "zipcode_search" do
+        markets = MarketSearchService.by_zipcode(80218)
+        expect(markets.map(&:name)).to match_array(["Denver Hipster Hoodlum"])
+      end
     end
   end
 end

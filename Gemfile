@@ -15,3 +15,8 @@ group :development, :test do
   gem 'jazz_hands'
 end
 
+group :test do
+  gem 'vcr'
+  gem 'fakeweb'
+end
+
