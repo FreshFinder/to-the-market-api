@@ -4,6 +4,7 @@ require './db/seeds/market_seeder'
 require './db/seeds/product_seeder'
 require './db/seeds/payment_type_seeder'
 require './db/seeds/address_seeder'
+require './db/seeds/season_seeder'
 
 describe "Parsing a market" do
   it "parses a CSV into lines" do
@@ -58,15 +59,15 @@ describe "Seeding a market" do
 
   describe 'seeding a market with schedules' do
     it 'parses the season' do
-      months_gregorian = MarketSeeder.convert_season_months("11/02/03 to 01/02/04")
-      months_as_words = MarketSeeder.convert_season_months("November to February")
+      months_gregorian = SeasonSeeder.convert_season_months("11/02/03 to 01/02/04")
+      months_as_words = SeasonSeeder.convert_season_months("November to February")
       expect(months_gregorian).to eq(["November", "January"])
       expect(months_as_words).to eq(["November", "February"])
     end
 
     it "changes the count in the database upon seeding" do
       out = StringIO.new
-      expect { MarketSeeder.seed(2, out) }.to change { Season.count }.by 2
+      expect { MarketSeeder.seed(2, out) }.to change { Season.count }.by 8
     end
   end
 end

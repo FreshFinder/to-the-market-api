@@ -1,5 +1,6 @@
 require 'csv'
 require_relative './address_seeder'
+require_relative './season_seeder'
 
 class MarketSeeder
 
@@ -43,12 +44,10 @@ class MarketSeeder
       end
     end
 
-    s1_start_month, s1_end_month = convert_season_months(line[:season1date])
-
-    season1 = Season.create!(:market_id => m.id,
-                            :season_number => 1,
-                            :start_month => s1_start_month,
-                            :end_month => s1_end_month)
+    SeasonSeeder.build_season(m.id, 1, line[:season1date], out)
+    SeasonSeeder.build_season(m.id, 2, line[:season2date], out)
+    SeasonSeeder.build_season(m.id, 3, line[:season3date], out)
+    SeasonSeeder.build_season(m.id, 4, line[:season4date], out)
 
 
   end
@@ -65,27 +64,4 @@ class MarketSeeder
     line.gsub(/"/, "") unless line.nil?
   end
 
-  def self.convert_season_months(season_date)
-    unless season_date.nil?
-      if season_date.include?("/")
-        parsed_months = parse_date_range(season_date)
-      else
-        parsed_months = season_date
-      end
-    end
-    parsed_months.split(" to ")
-  end
-
-  def self.season_date_splitter(date_range)
-    dates = date_range.gsub("/", "-").gsub(" ", "").split("to")
-    dates.map {|date| month_to_name(date)}
-  end
-
-  def self.month_to_name(date)
-    Date.strptime(date, '%m-%d-%Y').strftime("%B")
-  end
-
-  def self.parse_date_range(date_range)
-    season_date_splitter(date_range).join(" to ")
-  end
 end
