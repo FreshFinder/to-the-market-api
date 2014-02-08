@@ -16,7 +16,7 @@ class Market < ActiveRecord::Base
   end
 
   def self.search_by_zipcode(target_zipcode)
-    MarketSearchService.by_zipcode(target_zipcode)
+    market = MarketSearchService.by_zipcode(target_zipcode)
   end
 
 end

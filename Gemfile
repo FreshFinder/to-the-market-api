@@ -7,6 +7,7 @@ gem 'jbuilder'
 
 gem 'pg'
 gem 'thin'
+gem 'geocoder'
 
 group :development, :test do
   gem 'rspec-rails'

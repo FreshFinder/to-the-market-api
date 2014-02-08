@@ -24,7 +24,7 @@ describe "Markets Search API" do
       market_names = body.map { |market| market["name"] }
 
       expect(market_names).to match_array(["Denver Hipster Hoodlum"])
-      expect(market_names).not_to contain("Boca Bacon Bathers")
+      expect(market_names).not_to include("Boca Bacon Bathers")
     end
   end
 end
