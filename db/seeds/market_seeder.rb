@@ -1,4 +1,7 @@
 require 'csv'
+require_relative './address_seeder'
+require_relative './season_seeder'
+require_relative './schedule_seeder'
 
 class MarketSeeder
 
@@ -22,15 +25,9 @@ class MarketSeeder
   def self.build_markets(line, out)
     m = Market.create!(:fmid => line[:fmid], :name => clean_market(line[:marketname]))
     out.puts line[:marketname]
-    a = Address.create!(:market_id => m.id,
-                 :street => clean_street(line[:street]),
-                 :city => line[:city],
-                 :state => line[:state],
-                 :zipcode => line[:zip],
-                 :description => line[:location],
-                 :long => line[:x],
-                 :lat => line[:y])
-    out.puts a.city
+    AddressSeeder.build_address(m.id, line[:street], line[:city],
+                                line[:state], line[:zip],
+                                line[:location], line[:x], line[:y], out)
 
     product_list.each do |offering|
       if line[offering] == "Y"
@@ -48,6 +45,17 @@ class MarketSeeder
       end
     end
 
+    s1 = SeasonSeeder.build_season(m.id, 1, line[:season1date], out)
+    s2 = SeasonSeeder.build_season(m.id, 2, line[:season2date], out)
+    s3 = SeasonSeeder.build_season(m.id, 3, line[:season3date], out)
+    s4 = SeasonSeeder.build_season(m.id, 4, line[:season4date], out)
+
+
+    ScheduleSeeder.build_schedules(s1.id, line[:season1time], out)
+    ScheduleSeeder.build_schedules(s2.id, line[:season2time], out)
+    ScheduleSeeder.build_schedules(s3.id, line[:season3time], out)
+    ScheduleSeeder.build_schedules(s4.id, line[:season4time], out)
+
   end
 
   def self.product_list
@@ -60,10 +68,6 @@ class MarketSeeder
 
   def self.clean_market(line)
     line.gsub(/"/, "") unless line.nil?
-  end
-
-  def self.clean_street(line)
-    line.gsub(/,/, "") unless line.nil?
   end
 
 end
