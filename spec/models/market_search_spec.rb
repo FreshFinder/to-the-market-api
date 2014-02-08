@@ -18,8 +18,10 @@ describe Market do
 
   describe "zipcode search" do
     it "returns markets based on zip code" do
-      markets = Market.search_by_zipcode(80218)
-      expect(markets.map(&:name)).to match_array(["Denver Hipster Hoodlum"])
+      VCR.use_cassette "zipcode_search_from_model" do
+        markets = Market.search_by_zipcode(80218)
+        expect(markets.map(&:name)).to match_array(["Denver Hipster Hoodlum"])
+      end
     end
   end
 end
