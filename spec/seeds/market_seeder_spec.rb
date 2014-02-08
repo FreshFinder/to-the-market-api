@@ -5,6 +5,7 @@ require './db/seeds/product_seeder'
 require './db/seeds/payment_type_seeder'
 require './db/seeds/address_seeder'
 require './db/seeds/season_seeder'
+require './db/seeds/schedule_seeder'
 
 describe "Parsing a market" do
   it "parses a CSV into lines" do
@@ -65,9 +66,22 @@ describe "Seeding a market" do
       expect(months_as_words).to eq(["November", "February"])
     end
 
-    it "changes the count in the database upon seeding" do
+    it "changes the count in the database upon seeding a season" do
       out = StringIO.new
       expect { MarketSeeder.seed(2, out) }.to change { Season.count }.by 8
+    end
+
+    it "parses the schedule" do
+      week = "Mon:12:00 PM - 5:00 PM;Tue:12:00 PM - 5:00 PM;Wed:12:00 PM - 5:00 PM;Thu:12:00 PM - 5:00 PM;Fri:12:00 PM - 5:00 PM;Sat:10:00 AM - 5:00 PM;sun:12:00 PM - 5:00 PM;"
+      weekend = "Sat: 8:00 AM-3:00 PM;Sun: 8:00 AM-3:00 PM;"
+      parsed_week = {1=>["12:00:00", "17:00:00"], 2=> ["12:00:00", "17:00:00"], 3=> ["12:00:00", "17:00:00"], 4=> ["12:00:00" ,"17:00:00"], 5=> ["12:00:00", "17:00:00"], 6=> ["10:00:00" , "17:00:00"], 0=> ["12:00:00", "17:00:00"]}
+
+      expect(ScheduleSeeder.convert_season_times(week)).to eq(parsed_week)
+    end
+
+    it "changes the count in the database upon seeding a schedule" do
+      out = StringIO.new
+      expect { MarketSeeder.seed(2, out) }.to change { Schedule.count }.by 2
     end
   end
 end

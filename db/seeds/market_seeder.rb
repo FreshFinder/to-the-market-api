@@ -1,6 +1,7 @@
 require 'csv'
 require_relative './address_seeder'
 require_relative './season_seeder'
+require_relative './schedule_seeder'
 
 class MarketSeeder
 
@@ -44,11 +45,16 @@ class MarketSeeder
       end
     end
 
-    SeasonSeeder.build_season(m.id, 1, line[:season1date], out)
-    SeasonSeeder.build_season(m.id, 2, line[:season2date], out)
-    SeasonSeeder.build_season(m.id, 3, line[:season3date], out)
-    SeasonSeeder.build_season(m.id, 4, line[:season4date], out)
+    s1 = SeasonSeeder.build_season(m.id, 1, line[:season1date], out)
+    s2 = SeasonSeeder.build_season(m.id, 2, line[:season2date], out)
+    s3 = SeasonSeeder.build_season(m.id, 3, line[:season3date], out)
+    s4 = SeasonSeeder.build_season(m.id, 4, line[:season4date], out)
 
+
+    ScheduleSeeder.build_schedules(s1.id, line[:season1time], out)
+    ScheduleSeeder.build_schedules(s2.id, line[:season2time], out)
+    ScheduleSeeder.build_schedules(s3.id, line[:season3time], out)
+    ScheduleSeeder.build_schedules(s4.id, line[:season4time], out)
 
   end
 

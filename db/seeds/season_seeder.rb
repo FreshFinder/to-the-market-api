@@ -2,11 +2,12 @@ class SeasonSeeder
 
   def self.build_season(market_id, season_number, season_dates, out)
     start_month, end_month = convert_season_months(season_dates)
-    Season.create!(:market_id => market_id,
+    s = Season.create!(:market_id => market_id,
                    :season_number => season_number,
                    :start_month => start_month,
                    :end_month => end_month)
     out.puts "Season created for market #{market_id} created!"
+    return s
   end
 
   def self.convert_season_months(season_date)
