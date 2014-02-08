@@ -15,4 +15,8 @@ class Market < ActiveRecord::Base
     Market.includes(seasons: [:schedules]).first
   end
 
+  def self.search_by_zipcode(target_zipcode)
+    MarketSearchService.by_zipcode(target_zipcode)
+  end
+
 end
