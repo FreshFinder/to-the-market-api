@@ -23,9 +23,11 @@ describe "Markets Search API" do
         body = JSON.parse(response.body)
 
         market_names = body.map { |market| market["name"] }
-
         expect(market_names).to match_array(["Denver Hipster Hoodlum"])
         expect(market_names).not_to include("Boca Bacon Bathers")
+
+        market_addresses = body.map { |market| market["address"] }
+        expect(market_addresses.map { |market| market["zipcode"] }).to match_array([80218])
       end
     end
   end
