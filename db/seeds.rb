@@ -4,4 +4,4 @@ require './db/seeds/payment_type_seeder'
 
 ProductSeeder.seed
 PaymentTypeSeeder.seed
-MarketSeeder.seed(100)
+MarketSeeder.seed
