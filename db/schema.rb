@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205210450) do
+ActiveRecord::Schema.define(version: 20140213053112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(version: 20140205210450) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "accepted_payments", ["market_id"], name: "index_accepted_payments_on_market_id", using: :btree
+  add_index "accepted_payments", ["payment_type_id"], name: "index_accepted_payments_on_payment_type_id", using: :btree
 
   create_table "addresses", force: true do |t|
     t.integer  "market_id"
@@ -36,6 +39,8 @@ ActiveRecord::Schema.define(version: 20140205210450) do
     t.datetime "updated_at"
   end
 
+  add_index "addresses", ["lat"], name: "index_addresses_on_lat", using: :btree
+  add_index "addresses", ["long"], name: "index_addresses_on_long", using: :btree
   add_index "addresses", ["market_id"], name: "index_addresses_on_market_id", using: :btree
 
   create_table "markets", force: true do |t|
@@ -49,6 +54,9 @@ ActiveRecord::Schema.define(version: 20140205210450) do
     t.integer "market_id"
     t.integer "product_id"
   end
+
+  add_index "offerings", ["market_id"], name: "index_offerings_on_market_id", using: :btree
+  add_index "offerings", ["product_id"], name: "index_offerings_on_product_id", using: :btree
 
   create_table "payment_types", force: true do |t|
     t.string   "name"
@@ -71,6 +79,8 @@ ActiveRecord::Schema.define(version: 20140205210450) do
     t.datetime "updated_at"
   end
 
+  add_index "schedules", ["season_id"], name: "index_schedules_on_season_id", using: :btree
+
   create_table "seasons", force: true do |t|
     t.integer  "market_id"
     t.integer  "season_number"
@@ -79,5 +89,7 @@ ActiveRecord::Schema.define(version: 20140205210450) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "seasons", ["market_id"], name: "index_seasons_on_market_id", using: :btree
 
 end
